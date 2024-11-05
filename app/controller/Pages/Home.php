@@ -4,7 +4,7 @@ namespace App\Controller\Pages;
 
 use App\Utils\View;
 
-class Home{
+class Home extends Page{
 
 
     /**
@@ -12,10 +12,13 @@ class Home{
      * @return string
      *  */    
     public static function getHome(){
-        return View::render('pages/home', [
+        $content = View::render('pages/home', [
             'name' => 'JangoDev',
             'description' => 'Youtube: https://youtube.com'
         ]);   
+
+        // RETORNA A VIEW DA PAGINA
+        return parent::getPage('JangoDev', $content);
     }
 
 }
