@@ -12,7 +12,10 @@ class Home{
      * @return string
      *  */    
     public static function getHome(){
-        return View::render('pages/home');   
+        return View::render('pages/home', [
+            'name' => 'JangoDev',
+            'description' => 'Youtube: https://youtube.com'
+        ]);   
     }
 
 }
