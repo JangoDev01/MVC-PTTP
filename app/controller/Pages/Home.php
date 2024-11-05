@@ -14,7 +14,7 @@ class Home extends Page{
     public static function getHome(){
         $content = View::render('pages/home', [
             'name' => 'JangoDev',
-            'description' => 'Youtube: https://youtube.com'
+            'description' => 'Prototipo de Projecto MVC com PHP'
         ]);   
 
         // RETORNA A VIEW DA PAGINA
