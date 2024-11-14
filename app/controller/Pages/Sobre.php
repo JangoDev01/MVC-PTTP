@@ -5,7 +5,7 @@ namespace App\Controller\Pages;
 use \App\Utils\View;
 use \App\Model\Entity\Organization;
 
-class Home extends Page{
+class Sobre extends Page{
 
 
     /**
@@ -17,12 +17,14 @@ class Home extends Page{
         // ORGANIZACAO
         $obOrganization = new Organization;
 
-        $content = View::render('pages/home', [
-            'name' => $obOrganization->name
+        $content = View::render('pages/sobre', [
+            'name' => $obOrganization->name,
+            'description' => $obOrganization->description,
+            'site' => $obOrganization->site
         ]);   
 
         // RETORNA A VIEW DA PAGINA
-        return parent::getPage('HOME - JangoDevOps', $content);
+        return parent::getPage('SOBRE - JangoDevOps', $content);
     }
 
 }
