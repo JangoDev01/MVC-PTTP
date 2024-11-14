@@ -172,6 +172,12 @@ class Router{
             if(!isset($route['controller'])){
                 throw new Exception("A URL nao pode ser processada", 500);
             }
+
+            // ARGUMENTOS DA FUNCAO
+            $args = [];
+
+            // RETORNA A EXECUCAO DA FUNCAO
+            return call_user_func_array($route['controller'], $args);
             /*echo "<pre>";
             print_r($route);
             echo  "</pre>"; exit;
