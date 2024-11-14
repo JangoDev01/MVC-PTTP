@@ -125,6 +125,7 @@ class Router{
 
         // RETORNA A URI SEM PREFIXO
         return end($xUri);
+        //
     }
     /**
      * METODO RESPONSAVEL POR RETORNAR DADOS DA ROTA ATUAL
