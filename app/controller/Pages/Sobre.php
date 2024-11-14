@@ -9,10 +9,10 @@ class Sobre extends Page{
 
 
     /**
-     * METODO RESPONSAVEL POR RETORNAR O CONTEUDO (view) DA NOSSA HOME
+     * METODO RESPONSAVEL POR RETORNAR O CONTEUDO (view) DA NOSSA SOBRE
      * @return string
      *  */    
-    public static function getHome(){
+    public static function getSobre(){
 
         // ORGANIZACAO
         $obOrganization = new Organization;

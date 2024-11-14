@@ -3,6 +3,7 @@
 namespace App\Http;
 use \Closure;
 use \Exception;
+use \ReflectionFunction;
 
 class Router{
 
@@ -67,6 +68,16 @@ class Router{
                 unset($params[$key]);
                 continue;
             }
+        }
+
+        // VARIAVEIS DA ROTA
+        $params['variables'] = [];
+
+        // PADRAO DE VALIDACAO DAS ROTAS
+        $patternVariable = '/{(.*?)}/';
+        if(preg_match_all($patternVariable,$route,$matches)){
+            $route = preg_replace($patternVariable,'(.*?)',$route);
+            $params['variables'] = $matches[1];
         }
 
         // PADRAO DE VALIDACAO DA URL
@@ -141,9 +152,18 @@ class Router{
         // VALIDA AS ROTAS
         foreach ($this->routes as $patternRoute => $methods) {
             // VERIFICA SE A URI BATE COM O PADRAO
-            if (preg_match($patternRoute, $uri)) {
+            if (preg_match($patternRoute, $uri, $matches)) {
                 // VERIFICA O METODO
-                if($methods[$httpMethod]){
+                if(isset($methods[$httpMethod])){
+
+                    // REMOVE A PRIMEIRA POSICAO [0]
+                    unset($matches[0]);
+
+                    // VARIAVEIS PROCESSADAS
+                    $keys = $methods[$httpMethod]['variables'];
+                    $methods[$httpMethod]['variables'] = array_combine($keys,$matches);
+                    $methods[$httpMethod]['variables']['request'] = $this->request;
+
                     // RETORNO DOS PARAMETROS DA ROTA
                     return  $methods[$httpMethod];
 
@@ -175,6 +195,13 @@ class Router{
 
             // ARGUMENTOS DA FUNCAO
             $args = [];
+
+            // REFLECTION
+            $reflection = new ReflectionFunction($route['controller']);
+            foreach($reflection->getParameters() as $parameter){
+                $name = $parameter->getName();
+                $args[$name] = $route['variables'][$name] ?? '';
+            }
 
             // RETORNA A EXECUCAO DA FUNCAO
             return call_user_func_array($route['controller'], $args);
