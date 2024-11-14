@@ -2,11 +2,17 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use App\Http\Router;
+use \App\Http\Router;
+use \App\Utils\View;
 
-define('URL','http://localhost/MVC');
+define('URL','http://localhost/Projectos/MVC');
 
-// DEBUGANDO
+// DEFINE O VALOR DAS VARIAVEIS DA VIEW
+View::init([
+    'URL' => URL
+]);
+
+// INICIA O ROUTER
 $obRouter = new Router(URL);
 
 // INCLUI AS ROTAS DE PAGINAS

@@ -5,6 +5,21 @@ namespace App\Utils;
 class View{
 
     /**
+     * VARIAVEIS PADROES DA VIEW
+     * @var array
+     */
+    private static $vars = [];
+
+    /**
+     * METODO RESPONSAVEL POR DEFINIR OS DADOS INICIAS DA CLASSE
+     * @param array $vars
+     * 
+     */
+    public static function init($vars = []){
+        self::$vars = $vars;
+    }
+
+    /**
      *  METODO RESPONSAVEL POR RETORNAR O CONTEUDO DE UMA VIEW
      * @param string $view
      * @param string
@@ -30,17 +45,14 @@ class View{
         // CONTEUDO DA VIEW
         $contentView = self::getContentView($view);
 
+        // MERGES DE VARIAVEIS DA VIEW
+        $vars = array_merge(self::$vars,$vars);
+
         // CHAVES DO ARRAY DE VARIAVEIS
         $keys = array_keys($vars);
         $keys = array_map(function($item){
             return '{{'.$item.'}}';
         }, $keys);
-
-        /*
-        echo "<pre>";
-        print_r($keys);
-        echo  "</pre>"; exit;
-        */ 
 
         //RETORNA O CONTEUDO RENDERIZADO
         return str_replace($keys,array_values($vars),$contentView);
